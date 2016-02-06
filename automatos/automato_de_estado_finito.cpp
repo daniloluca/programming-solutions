@@ -1,10 +1,9 @@
 #include <iostream>
 
-#define INITIALSTATE 'A'
-#define FINALSTATE 'A'
-
 using namespace std;
 
+char initialState = 'A';
+char finalStates[] = {'A'};
 char alphabet[] = {'0', '1'};
 char transitions[][3] = {
 	{'A', '0', 'B'},
@@ -18,9 +17,8 @@ bool valAlphabet(char letter);
 bool automaton(char state);
 
 int main(){
-    char state=INITIALSTATE;
-    
-    cout << (automaton(state) ? "Valida!" : "Invalida!") << endl;
+	
+    cout << (automaton(initialState) ? "Valida!" : "Invalida!") << endl;
     
     return 0;
 }
@@ -35,12 +33,11 @@ char getState(char state, char letter){
 }
 
 bool valAlphabet(char letter){
-	bool val = false;
 	for(int i=0; i<sizeof(alphabet); i++)
 		if(letter == alphabet[i])
-			val = true;
+			return true;
 			
-	return val;
+	return false;
 }
 
 bool automaton(char state){
@@ -53,8 +50,9 @@ bool automaton(char state){
         state = getState(state, letter);
     }
     
-    if(state==FINALSTATE)
-    	return true;
-    else
-    	return false;
+    for(int i=0; i<sizeof(finalStates); i++)
+	    if(state==finalStates[i])
+    		return true;
+    	
+    return false;
 }
